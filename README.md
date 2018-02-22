@@ -15,6 +15,11 @@ against the current working directory (and its children)...
 docker container run -v `pwd`:/home/node/src g3devdocker/lintmd:latest
 ```
 
+# Docker
+
+Find the latest docker image [here][docker].
+
 [markdownlinter]:https://www.npmjs.com/package/markdownlint-cli
 [markdownrules]:https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md
 [node]:https://hub.docker.com/_/node/
+[docker]:https://hub.docker.com/r/g3devdocker/lintmd/
