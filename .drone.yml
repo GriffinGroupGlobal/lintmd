@@ -10,6 +10,7 @@ pipeline:
     commands:
       - printenv
       - pwd
+      - ls -la
   createTag:
     image: g3dev/jinja2cli
     template: tags.j2
