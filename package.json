@@ -8,6 +8,6 @@
     "lint": "markdownlint --config markdownlint.json "
   },
   "devDependencies": {
-    "markdownlint-cli": "^0.7.1"
+    "markdownlint-cli": "^0.10.0"
   }
 }
