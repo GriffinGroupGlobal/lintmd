@@ -3,16 +3,18 @@
 This is a g3 development utility for running a linter against all markdown files mounted to the image. The is the
 current [linter][markdownlinter] and these are the [rules][markdownrules] that may be implemented.
 
-This is currently built off of the node [alpine image][node].
 
 # Usage
 
-The image expects a directory to be mounted at the /home/node/src location. It will search the entire directory
-structure for *.md files and lint them against the rule set. For instance, to use the latest linter and rule set
-against the current working directory (and its children)...
+When calling via docker you must:
+- mount a volume
+  - this volume may have a src directory where md files can be found
+  - this volume may have a test directory where md file can be found
+  - these two directories are where the linter will look for md files
+- specify a working dir which must be the volume you mounted
 
 ```bash
-docker container run -v `pwd`:/home/node/src g3dev/lintmd:latest
+docker run --rm -v /Users/mattjenks/Development/Hydrogen/gplib_provingground:/mj --workdir /mj g3dev/lintmd:latest
 ```
 
 # Docker
