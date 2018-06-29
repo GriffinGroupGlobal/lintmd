@@ -4,15 +4,13 @@ set -e
 
 wd=`pwd`
 
-cd /home/node
+#cd /home/node
+cd /Users/mattjenks/Development/utilities/lintmd
 
 if [ -d $wd/src ]; then
-   npm run lint -- $wd/src/*.md
-   npm run lint -- $wd/src/**/*.md
+   npm run lint -- -V
+   npm run lint -- $wd/*.md
+   npm run lint -- $wd/**/*.md
 fi
 
-if [ -d $wd/test ]; then
-   npm run lint -- $wd/test/*.md
-   npm run lint -- $wd/test/**/*.md
-fi
 
