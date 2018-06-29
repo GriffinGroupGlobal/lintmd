@@ -4,8 +4,7 @@ set -e
 
 wd=`pwd`
 
-#cd /home/node
-cd /Users/mattjenks/Development/utilities/lintmd
+cd /home/node
 
 if [ -d $wd/src ]; then
    npm run lint -- -V
