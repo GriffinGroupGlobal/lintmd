@@ -1,9 +1,15 @@
 pipeline:
   createDockerfile:
     image: g3dev/jinja2cli
+    pull: true
     template: Dockerfile.j2
     data: build_data.yml
     outfile: Dockerfile.j2
+  debug1:
+    image: g3dev/nodedev
+    commands:
+      - printenv
+      - pwd
   createTag:
     image: g3dev/jinja2cli
     template: tags.j2
