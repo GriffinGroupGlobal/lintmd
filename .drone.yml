@@ -1,7 +1,7 @@
 pipeline:
   createDockerfile:
     image: g3dev/jinja2cli
-    template: Dockerfile.j2.j2
+    template: Dockerfile.j2
     data: build_data.yml
     outfile: Dockerfile.j2
   createTag:
