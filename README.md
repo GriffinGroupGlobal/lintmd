@@ -3,7 +3,6 @@
 This is a g3 development utility for running a linter against all markdown files mounted to the image. The is the
 current [linter][markdownlinter] and these are the [rules][markdownrules] that may be implemented.
 
-
 # Usage
 
 When calling via docker you must:
