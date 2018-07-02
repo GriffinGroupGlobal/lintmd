@@ -3,11 +3,12 @@
 
 # User-specific stuff:
 .idea
-
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/modules.xml
 .idea/dictionaries
+.tags
+Dockerfile
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
