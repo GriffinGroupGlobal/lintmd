@@ -1,6 +1,0 @@
-maintainer: g3-dev@griffingroupglobal.com
-node_version: 9.11
-node_os: stretch
-node_env: development
-branch: __BRANCH__
-commit_sha: __SHA__
