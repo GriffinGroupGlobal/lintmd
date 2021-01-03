@@ -2,7 +2,7 @@
   "name": "markdown-lint",
   "version": "0.0.1",
   "description": "nodejs linter for markdown and configuration",
-  "author": "Matt Jenks <matt.jenks@griffingroupglobal.com",
+  "author": "Chris Weicht <chris.weicht@estatesapce.com",
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "lint": "markdownlint --config markdownlint.json "

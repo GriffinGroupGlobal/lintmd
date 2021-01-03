@@ -1,0 +1,169 @@
+version: 2.1
+
+references:
+  set_environment_variables: &set_environment_variables
+    run:
+      name: Set Environment Variables
+      command: |
+        echo 'export CI_SHA1=$CIRCLE_SHA1' >> ${BASH_ENV}
+        echo 'export CI_BRANCH=$CIRCLE_BRANCH' >> ${BASH_ENV}
+        echo 'export CI_BUILD_NUM=$CIRCLE_BUILD_NUM' >> ${BASH_ENV}
+        echo 'export CI_TAG=$CIRCLE_TAG' >> ${BASH_ENV}
+        echo 'export AWS_DEFAULT_REGION=us-east-1' >> ${BASH_ENV}
+        echo "export AWS_ACCESS_KEY_ID=\$${ENV_NAME}_AWS_ACCESS_KEY_ID" >> ${BASH_ENV}
+        echo "export AWS_SECRET_ACCESS_KEY=\$${ENV_NAME}_AWS_SECRET_ACCESS_KEY" >> ${BASH_ENV}
+
+  docker_build_and_push: &docker_build_and_push
+    run:
+      name: Build Docker Images
+      command: |
+        prepare-awscli
+        docker-pull -f deploy/build.config
+        docker-build -f deploy/build.config
+        docker-push -f deploy/build.config
+
+jobs:
+#  lintmd:
+#    docker:
+#      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+#        aws_auth:
+#          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+#          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+#    steps:
+#      - checkout
+#      - run: runlintmd.sh
+  checkout_code:
+    docker:
+      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+        aws_auth:
+          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+    steps:
+      - *set_environment_variables
+      - checkout
+#      - run: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} && npm install
+#      - run: list-outdated-pkgs.sh --ignore mongoose --ignore @babel/runtime-corejs2
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
+#  lintjs:
+#    docker:
+#      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+#        aws_auth:
+#          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+#          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+#    steps:
+#      - attach_workspace:
+#          at: ./
+#      - *set_environment_variables
+#      - run: npm install
+#      - run: runlint.sh
+  build_code:
+    docker:
+      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+        aws_auth:
+          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+    steps:
+      - attach_workspace:
+          at: ./
+      - *set_environment_variables
+#      - run: npm install
+#      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
+
+  build_container:
+    docker:
+      - image: quay.io/reactiveops/ci-images:v8.0-alpine
+    steps:
+      - attach_workspace:
+          at: .
+      - *set_environment_variables
+      - setup_remote_docker
+      - *docker_build_and_push
+    environment:
+      ROK8S_CONFIG: deploy/build.config
+      ENV_NAME: STAGING
+
+#  test_code:
+#    docker:
+#      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+#        aws_auth:
+#          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+#          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+#      - image: circleci/mongo:$MONGO_VERSION
+#    environment:
+#      MONGODB_HOST: localhost
+#      MONGODB_NAME: gravity
+#      MONGODB_PORT: 27017
+#      MONGODB_AUTH: admin
+#    steps:
+#      - attach_workspace:
+#          at: .
+#      - *set_environment_variables
+#      - run: npm install
+#      - run: jinja2 .env.j2 env_data.yml > .env
+#      - run: mongo localhost:27017/admin ./test/mongo_user_create_snippet.js
+#      - run: npm run test-unit
+#      - run: npm run test-coverage
+#      - store_test_results:
+#          path: reports
+#
+#  deploy_npm:
+#    docker:
+#      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
+#        aws_auth:
+#          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
+#          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
+#    steps:
+#      - attach_workspace:
+#          at: .
+#      - run: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN} && npm publish
+
+workflows:
+  version: 2
+  release:
+    jobs:
+#      - lintmd:
+#          context: estatespace
+      - checkout_code:
+          context: estatespace
+#      - lintjs:
+#          context: estatespace
+#          requires:
+#            - checkout_code
+      - build_code:
+          context: estatespace
+          requires:
+            - checkout_code
+      - build_container:
+          context: estatespace
+          filters:
+            branches:
+              only:
+                - /(.*\/)?[eE][sS]-.*/
+                - /(.*\/)?feature.*/
+                - master
+            tags:
+              only: /.*/
+          requires:
+            - build_code
+#            - test_code
+#      - test_code:
+#          context: estatespace
+#          requires:
+#            - build_code
+#      - deploy_npm:
+#          context: estatespace
+#          requires:
+#            - test_code
+#            - build_code
+#          filters:
+#            branches:
+#              only: master
+#            tags:
+#              ignore: /.*/
