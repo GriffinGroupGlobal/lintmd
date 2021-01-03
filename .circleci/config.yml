@@ -23,15 +23,6 @@ references:
         docker-push -f deploy/build.config
 
 jobs:
-#  lintmd:
-#    docker:
-#      - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
-#        aws_auth:
-#          aws_access_key_id: $STAGING_AWS_ACCESS_KEY_ID
-#          aws_secret_access_key: $STAGING_AWS_SECRET_ACCESS_KEY
-#    steps:
-#      - checkout
-#      - run: runlintmd.sh
   checkout_code:
     docker:
       - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
