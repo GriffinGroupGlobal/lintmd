@@ -56,7 +56,6 @@ jobs:
           at: ./
       - *set_environment_variables
       - run: npm install
-      - run: touch ./whereisbuild_code.txt
 #      - run: npm run build
       - persist_to_workspace:
           root: .
@@ -70,7 +69,6 @@ jobs:
           at: .
       - *set_environment_variables
       - setup_remote_docker
-      - run: touch ./whereisbuild_container.txt
       - *docker_build_and_push
     environment:
       ROK8S_CONFIG: deploy/build.config
