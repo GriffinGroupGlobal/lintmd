@@ -50,6 +50,7 @@ jobs:
 #      - *set_environment_variables
 #      - run: npm install
 #      - run: runlint.sh
+
   build_code:
     docker:
       - image: 540619935031.dkr.ecr.us-east-1.amazonaws.com/nodedev:master
@@ -60,12 +61,13 @@ jobs:
       - attach_workspace:
           at: ./
       - *set_environment_variables
+
 #      - run: npm install
 #      - run: npm run build
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist/*
+#      - persist_to_workspace:
+#          root: .
+#          paths:
+#            - dist/*
 
   build_container:
     docker:
