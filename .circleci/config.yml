@@ -62,9 +62,6 @@ jobs:
           root: .
           paths:
             - ./*
-#            - runlint.sh
-#            - Dockerfile
-#            - markdownlint.json
   build_container:
     docker:
       - image: quay.io/reactiveops/ci-images:v8.0-alpine
