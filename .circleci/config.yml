@@ -56,7 +56,6 @@ jobs:
           at: ./
       - *set_environment_variables
       - run: npm install
-#      - run: npm run build
       - persist_to_workspace:
           root: .
           paths:
