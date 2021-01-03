@@ -1,6 +1,6 @@
 {
   "name": "markdown-lint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "nodejs linter for markdown and configuration",
   "author": "Chris Weicht <chris.weicht@estatesapce.com",
   "license": "SEE LICENSE IN LICENSE.md",
