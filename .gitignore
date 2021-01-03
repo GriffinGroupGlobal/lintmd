@@ -8,7 +8,6 @@
 .idea/**/modules.xml
 .idea/dictionaries
 .tags
-Dockerfile
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
