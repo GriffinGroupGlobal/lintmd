@@ -61,13 +61,14 @@ jobs:
       - attach_workspace:
           at: ./
       - *set_environment_variables
-
 #      - run: npm install
 #      - run: npm run build
-#      - persist_to_workspace:
-#          root: .
-#          paths:
-#            - dist/*
+      - persist_to_workspace:
+          root: .
+          paths:
+            - runlint.sh
+            - Dockerfile
+            - markdownlint.json
 
   build_container:
     docker:
