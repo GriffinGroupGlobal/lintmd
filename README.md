@@ -1,7 +1,7 @@
 # Description
 
-This is a g3 development utility for running a linter against all markdown files mounted to the image. The is the
-current [linter][markdownlinter] and these are the [rules][markdownrules] that may be implemented.
+This is an EstateSpace development utility for running a linter against all markdown files mounted to the image. This is
+the current [linter][markdownlinter] and these are the [rules][markdownrules] that may be implemented.
 
 # Usage
 
@@ -14,7 +14,7 @@ When calling via docker you must:
 - example:
 
 ```bash
-docker run --rm -v /Users/mattjenks/Development/Hydrogen/gplib_provingground:/mj --workdir /mj g3dev/lintmd:latest
+docker run --rm -v /Users/mattjenks/Development/Hydrogen/gplib_provingground:/mj --workdir /mj 540619935031.dkr.ecr.us-east-1.amazonaws.com/lintmd:latest
 ```
 
 # Docker
@@ -24,4 +24,3 @@ Find the latest docker image [here][docker].
 [markdownlinter]:https://www.npmjs.com/package/markdownlint-cli
 [markdownrules]:https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md
 [node]:https://hub.docker.com/_/node/
-[docker]:https://hub.docker.com/r/g3dev/lintmd/
