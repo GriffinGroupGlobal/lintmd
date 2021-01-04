@@ -1,6 +1,6 @@
 # Description
 
-This is an EstateSpace development utility for running a linter against all markdown files mounted to the image. This is
+EstateSpace development utility for running a linter against all markdown files mounted to the image. This is
 the current [linter][markdownlinter] and these are the [rules][markdownrules] that may be implemented.
 
 # Usage
